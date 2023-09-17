@@ -10,27 +10,22 @@ public class ClienteService : IClienteRepository
         throw new NotImplementedException();
     }
 
-    public Task<ClienteModel> GetById(int id)
+    public Task<ClienteModel> GetByCpf(string cpf)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ClienteModel> GetByEmail(string email)
+    public Task<bool> Create(ClienteModel model)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ClienteModel> Create(ClienteModel model)
+    public Task<ClienteModel> Update(string cpf, ClienteModel cliente)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ClienteModel> Update(string email, ClienteModel cliente)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ClienteModel> Delete(string email)
+    public Task<ClienteModel> Delete(string cpf)
     {
         throw new NotImplementedException();
     }

@@ -2,11 +2,10 @@
 
 namespace Cliente.API.Models;
 
-public class ClienteModel
+public class ClienteModel 
 {
     [Required]
-    [MinLength(3)]
-    [MaxLength(255)]
+    [MinLength(3), MaxLength(255)]
     public string Nome { get; private set; } = string.Empty;
 
     [Required]
@@ -27,7 +26,7 @@ public class ClienteModel
     public string Empregador { get; private set; } = string.Empty;
 
     [Required]
-    public required Endereco Endereco { get; set; }
+    public string EnderecoCEP { get; set; } = string.Empty;
 
     [Required]
     public required decimal RendimentoMensal { get; set; }
