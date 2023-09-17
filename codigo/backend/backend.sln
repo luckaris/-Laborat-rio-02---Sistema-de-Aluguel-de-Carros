@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empresa.API", "Empresa.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banco.API", "Banco.API\Banco.API.csproj", "{A7B2E244-1BF6-43F2-B26A-96B84A3A0D1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automovel.API", "Automovel.API\Automovel.API.csproj", "{567B89D9-623A-434F-AF1F-998F1938658D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{A7B2E244-1BF6-43F2-B26A-96B84A3A0D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7B2E244-1BF6-43F2-B26A-96B84A3A0D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7B2E244-1BF6-43F2-B26A-96B84A3A0D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567B89D9-623A-434F-AF1F-998F1938658D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567B89D9-623A-434F-AF1F-998F1938658D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567B89D9-623A-434F-AF1F-998F1938658D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567B89D9-623A-434F-AF1F-998F1938658D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

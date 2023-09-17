@@ -8,7 +8,8 @@
         "auth.api": "StartDebugging",
         "cliente.api": "StartDebugging",
         "empresa.api": "StartDebugging",
-        "banco.api": "StartDebugging"
+        "banco.api": "StartDebugging",
+        "automovel.api": "StartDebugging"
       }
     }
   }
