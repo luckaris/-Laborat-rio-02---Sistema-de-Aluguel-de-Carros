@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Auth.Controllers;
 
@@ -18,6 +17,14 @@ public class AuthController : ControllerBase
     private readonly RoleManager<IdentityRole> _gerenciarPermissoes;
     private readonly IConfiguration _configuracao;
 
+    /// <summary>
+    /// Realiza a injeção de dependência das classes que são responsáveis por gerenciar 
+    /// usuários e gerenciar permissões e também a interface IConfiguration para obter 
+    /// dados do appsettings.json.
+    /// </summary>
+    /// <param name="gerenciarUsuario">Gerenciar os usuários.</param>
+    /// <param name="gerenciarPermissao">Gerenciar as permissões.</param>
+    /// <param name="configuracao">Obter dados do appsettings.json.</param>
     public AuthController(
         UserManager<IdentityUser> gerenciarUsuario,
         RoleManager<IdentityRole> gerenciarPermissao,
@@ -151,6 +158,62 @@ public class AuthController : ControllerBase
         response = new
         {
             token,
+        };
+        return Ok(response);
+    }
+
+    /// <summary>Atualiza as permissões de um usuário em específico para BANCO.</summary>
+    /// <param name="dto">Dados enviados no corpo da requisição para atualizar as permissões.</param>
+    /// <returns>IActionResult</returns>
+    [HttpPost("atualizar-permissao-para-banco")]
+    public async Task<IActionResult> AtualizarPermissaoParaBanco([FromBody] AtualizarPermissoesDto dto)
+    {
+        var usuario = await _gerenciarUsuario.FindByNameAsync(dto.NomeDeUsuario);
+        object response;
+
+        if(usuario is null)
+        {
+            response = new
+            {
+                status = StatusCodes.Status404NotFound.ToString(),
+                message = "Usuário não foi encontrado."
+            };
+            return NotFound(response);
+        }
+
+        await _gerenciarUsuario.AddToRoleAsync(usuario, EPermissoesUsuario.BANCO.ToString());
+        response = new
+        {
+            status = StatusCodes.Status200OK.ToString(),
+            message = $"O usuário com nome de usuário '{dto.NomeDeUsuario}' tem permissões de BANCO."
+        };
+        return Ok(response);
+    }
+
+    /// <summary>Atualiza as permissões de um usuário em específico para EMPRESA.</summary>
+    /// <param name="dto">Dados enviados no corpo da requisição para atualizar as permissões.</param>
+    /// <returns>IActionResult</returns>
+    [HttpPost("atualizar-permissao-para-empresa")]
+    public async Task<IActionResult> AtualizarPermissaoParaEmpresa([FromBody] AtualizarPermissoesDto dto)
+    {
+        var usuario = await _gerenciarUsuario.FindByNameAsync(dto.NomeDeUsuario);
+        object response;
+
+        if (usuario is null)
+        {
+            response = new
+            {
+                status = StatusCodes.Status404NotFound.ToString(),
+                message = "Usuário não foi encontrado."
+            };
+            return NotFound(response);
+        }
+
+        await _gerenciarUsuario.AddToRoleAsync(usuario, EPermissoesUsuario.EMPRESA.ToString());
+        response = new
+        {
+            status = StatusCodes.Status200OK.ToString(),
+            message = $"O usuário com nome de usuário '{dto.NomeDeUsuario}' tem permissões de EMPRESA."
         };
         return Ok(response);
     }

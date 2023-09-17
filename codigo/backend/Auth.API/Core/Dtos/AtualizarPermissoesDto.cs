@@ -4,6 +4,6 @@ namespace Auth.API.Core.Dtos;
 
 public class AtualizarPermissoesDto
 {
-    [Required(ErrorMessage = "Username is required")]
-    public string Username { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Nome de usuário é obrigatório.")]
+    public string NomeDeUsuario { get; set; } = string.Empty;
 }
