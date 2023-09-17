@@ -57,4 +57,4 @@
 
 ## Diagrama de Classe
 
-![diagrama](./docs/diagramaDeClasse.png)
+![diagrama](./docs/DiagramaDeClasse.png)
