@@ -5,7 +5,10 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "aluguel.api": "StartDebugging",
-        "auth.api": "StartDebugging"
+        "auth.api": "StartDebugging",
+        "cliente.api": "StartDebugging",
+        "empresa.api": "StartDebugging",
+        "banco.api": "StartDebugging"
       }
     }
   }

@@ -13,6 +13,24 @@ services:
       context: .
       dockerfile: Auth.API/Dockerfile
 
+  cliente.api:
+    image: ${DOCKER_REGISTRY-}clienteapi
+    build:
+      context: .
+      dockerfile: Cliente.API/Dockerfile
+
+  empresa.api:
+    image: ${DOCKER_REGISTRY-}empresaapi
+    build:
+      context: .
+      dockerfile: Empresa.API/Dockerfile
+
+  banco.api:
+    image: ${DOCKER_REGISTRY-}bancoapi
+    build:
+      context: .
+      dockerfile: Banco.API/Dockerfile
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
     hostname: zookeeper

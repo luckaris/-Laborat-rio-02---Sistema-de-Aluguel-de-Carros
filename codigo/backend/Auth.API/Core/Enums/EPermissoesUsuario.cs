@@ -1,9 +1,8 @@
-﻿namespace Auth.API.Core.Enums
+﻿namespace Auth.API.Core.Enums;
+
+public enum EPermissoesUsuario
 {
-    public enum EPermissoesUsuario
-    {
-        EMPRESA,
-        BANCO,
-        CLIENTE
-    }
+    EMPRESA,
+    BANCO,
+    CLIENTE
 }
