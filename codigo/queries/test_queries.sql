@@ -1,0 +1,3 @@
+-- VERIFICANDO SE AS PERMISSÕES FORAM INSERIDAS COM SUCESSO APÓS A EXECUÇÃO DA ROTA /api/Auth/preencher-permissoes
+
+SELECT * FROM dbo.AspNetRoles;
