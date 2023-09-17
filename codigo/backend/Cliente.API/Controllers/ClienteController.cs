@@ -42,9 +42,8 @@ public class ClienteController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ClienteModel cliente)
     {
-        var clienteFoiCriado = await _clienteRepository.Create(cliente);
         object response;
-
+        var clienteFoiCriado = await _clienteRepository.Create(cliente);
         if (!clienteFoiCriado)
         {
             response = new
@@ -65,23 +64,30 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] string cpf, [FromBody] ClienteModel cliente)
     {
         var clienteAtualizado = await _clienteRepository.Update(cpf, cliente);
-
         if (clienteAtualizado is null)
         {
-            return BadRequest();
+            var response = new
+            {
+                status = StatusCodes.Status400BadRequest.ToString(),
+                message = "Erro ao atualizar os dados do cliente."
+            };
+            return BadRequest(response);
         }
-
         return NoContent();
     }
 
     [HttpDelete("{cpf}")]
     public async Task<IActionResult> Detele([FromRoute] string cpf)
     {
-        var clienteDeletado = await _clienteRepository.Delete(cpf);
-
-        if(clienteDeletado is null)
-        { 
-            return BadRequest(); 
+        var clienteFoiDeletado = await _clienteRepository.Delete(cpf);
+        if (!clienteFoiDeletado)
+        {
+            var response = new
+            {
+                status = StatusCodes.Status400BadRequest.ToString(),
+                message = "Erro ao apagar cliente do banco de dados."
+            };
+            return BadRequest(response);
         }
         return NoContent();
     }
