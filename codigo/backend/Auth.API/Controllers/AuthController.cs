@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
 
     /// <summary>Rota para adicionar Roles no banco de dados.</summary>
     /// <returns>IActionResult</returns>
-    [HttpPost("preencer-permissoes")]
+    [HttpPost("preencher-permissoes")]
     public async Task<IActionResult> PreencherPermissoes()
     {
         string empresa = EPermissoesUsuario.EMPRESA.ToString();
