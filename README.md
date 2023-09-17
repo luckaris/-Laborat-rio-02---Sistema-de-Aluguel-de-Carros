@@ -10,26 +10,29 @@
 * * Consultar informações sobre seus pedidos de aluguel;
 * * Cancelar pedidos de aluguel.
 
-3. Os agentes devem poder:
+3. Os bancos devem:
+
+* * Avaliar pedidos de aluguel do ponto de vista financeiro;
+
+4. As empresas devem poder:
 
 * * Modificar pedidos de aluguel;
-* * Avaliar pedidos de aluguel do ponto de vista financeiro;
-* * Efetivar o contrato de aluguel (em caso de avaliação positiva).
+* * Efetivar o contrato de aluguel (em caso de avaliação positiva do banco).
 
-4. O sistema deve armazenar dados dos contratantes de aluguel, como:
+5. Os pedidos de aluguel devem armazenar dados dos contratantes de aluguel, como:
 
 * * Identificação (RG, CPF, Nome, Endereço);
 * * Profissão;
 * * Entidades empregadoras;
 * * Rendimentos auferidos (máximo 3).
 
-5. Os automóveis alugados deverão poder ser registrados como propriedade de:
+6. Os automóveis alugados deverão poder ser registrados como propriedade de:
 
 * * Clientes;
 * * Empresas;
 * * Bancos.
 
-6. O sistema deverá registrar dados sobre os automóveis, como:
+7. O sistema deverá registrar dados sobre os automóveis, como:
 
 * * Renavam;
 * * Ano;
@@ -37,8 +40,8 @@
 * * Modelo;
 * * Placa.
 
-7. O aluguel de um automóvel deverá poder ser associado a um contrato de crédito concedido por um dos bancos agentes;
-8. O servidor central do sistema deverá estar ligado à Internet e ser acessível a partir dos computadores locais dos clientes e dos agentes aderentes.
+8. O aluguel de um automóvel deverá poder ser associado a um contrato de crédito concedido por um dos bancos agentes;
+9. O servidor central do sistema deverá estar ligado à Internet e ser acessível a partir dos computadores locais dos clientes e dos agentes aderentes.
 
 ## Diagrama de Caso de Uso
 
@@ -57,4 +60,4 @@
 
 ## Diagrama de Classe
 
-![diagrama](./docs/diagramaDeClasse.png)
+![diagrama](./docs/DiagramaDeClasse.png)
