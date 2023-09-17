@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cliente.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230917201027_InitialMigration2")]
-    partial class InitialMigration2
+    [Migration("20230917213515_MigrationDiogo")]
+    partial class MigrationDiogo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,10 @@ namespace Cliente.API.Migrations
                     b.Property<string>("Cpf")
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Empregador")
                         .IsRequired()

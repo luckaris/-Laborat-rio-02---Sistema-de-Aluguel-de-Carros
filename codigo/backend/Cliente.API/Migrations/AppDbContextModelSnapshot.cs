@@ -27,6 +27,10 @@ namespace Cliente.API.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Empregador")
                         .IsRequired()
                         .HasMaxLength(255)

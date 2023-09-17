@@ -87,7 +87,6 @@ public class AuthController : ControllerBase
             UserName = dto.NomeDeUsuario,
             SecurityStamp = Guid.NewGuid().ToString(),
         };
-
         var createUserResult = await _gerenciarUsuario.CreateAsync(user, dto.Senha!);
         List<string> errors = new();
         if (!createUserResult.Succeeded)
@@ -110,6 +109,31 @@ public class AuthController : ControllerBase
             message = "Usuário criado com sucesso."
         };
         return Ok(response);
+    }
+
+    [HttpPut("update/{email}")]
+    public async Task<IActionResult> Update([FromRoute] string email, [FromBody] RegistroDto dto)
+    {
+        var usuario = await _gerenciarUsuario.FindByEmailAsync(email);
+
+        if(usuario is null)
+        {
+            return NotFound(new
+            {
+                status = StatusCodes.Status404NotFound.ToString(),
+                message = "Usuário não foi encontrado."
+            });
+        }
+
+        usuario.UserName = dto.NomeDeUsuario;
+        usuario.Email = dto.Email;
+
+        await _gerenciarUsuario.UpdateAsync(usuario);
+        return Ok(new
+        {
+            status = StatusCodes.Status200OK.ToString(),
+            message = "Usuário foi atualizado com sucesso."
+        });
     }
 
     /// <summary>Rota para logar o usuário na aplicação.</summary>

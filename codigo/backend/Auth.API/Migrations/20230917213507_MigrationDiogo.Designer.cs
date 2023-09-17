@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auth.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230917200821_InitialMigration2")]
-    partial class InitialMigration2
+    [Migration("20230917213507_MigrationDiogo")]
+    partial class MigrationDiogo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
