@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "authapi", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -37,7 +37,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 
 var connectionString = builder.Configuration.GetConnectionString("local");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
