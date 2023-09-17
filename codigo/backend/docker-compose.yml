@@ -1,41 +1,11 @@
 version: '3.4'
 
 services:
-  aluguel.api:
-    image: ${DOCKER_REGISTRY-}aluguelapi
-    build:
-      context: .
-      dockerfile: Aluguel.API/Dockerfile
-
   auth.api:
     image: ${DOCKER_REGISTRY-}authapi
     build:
       context: .
       dockerfile: Auth.API/Dockerfile
-
-  cliente.api:
-    image: ${DOCKER_REGISTRY-}clienteapi
-    build:
-      context: .
-      dockerfile: Cliente.API/Dockerfile
-
-  empresa.api:
-    image: ${DOCKER_REGISTRY-}empresaapi
-    build:
-      context: .
-      dockerfile: Empresa.API/Dockerfile
-
-  banco.api:
-    image: ${DOCKER_REGISTRY-}bancoapi
-    build:
-      context: .
-      dockerfile: Banco.API/Dockerfile
-
-  automovel.api:
-    image: ${DOCKER_REGISTRY-}automovelapi
-    build:
-      context: .
-      dockerfile: Automovel.API/Dockerfile
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -60,5 +30,3 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
-
