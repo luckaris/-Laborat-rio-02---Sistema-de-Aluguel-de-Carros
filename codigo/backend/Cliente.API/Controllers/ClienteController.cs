@@ -26,7 +26,7 @@ public class ClienteController : ControllerBase
     {
         var cliente = await _clienteRepository.GetByCpf(cpf);
 
-        if(cliente is null)
+        if (cliente is null)
         {
             var response = new
             {
@@ -45,7 +45,7 @@ public class ClienteController : ControllerBase
         var clienteFoiCriado = await _clienteRepository.Create(cliente);
         object response;
 
-        if(!clienteFoiCriado)
+        if (!clienteFoiCriado)
         {
             response = new
             {
@@ -59,5 +59,30 @@ public class ClienteController : ControllerBase
             nome = cliente.Nome,
         };
         return Created($"https://localhost:7247/cliente/{cliente.Cpf}", response);
+    }
+
+    [HttpPut("{cpf}")]
+    public async Task<IActionResult> Update([FromRoute] string cpf, [FromBody] ClienteModel cliente)
+    {
+        var clienteAtualizado = await _clienteRepository.Update(cpf, cliente);
+
+        if (clienteAtualizado is null)
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{cpf}")]
+    public async Task<IActionResult> Detele([FromRoute] string cpf)
+    {
+        var clienteDeletado = await _clienteRepository.Delete(cpf);
+
+        if(clienteDeletado is null)
+        { 
+            return BadRequest(); 
+        }
+        return NoContent();
     }
 }
