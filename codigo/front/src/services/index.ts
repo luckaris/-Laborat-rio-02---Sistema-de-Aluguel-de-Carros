@@ -9,7 +9,7 @@ const apiCliente = axios.create({
 });
 
 const apiAuth = axios.create({
-  baseURL: "http://localhost:7106",
+  baseURL: "http://localhost:7106/api/auth",
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
