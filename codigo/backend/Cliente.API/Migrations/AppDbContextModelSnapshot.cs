@@ -21,9 +21,9 @@ namespace Cliente.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cliente.API.Models.ClienteModel", b =>
+            modelBuilder.Entity("Cliente.API.Models.ClienteEntidade", b =>
                 {
-                    b.Property<string>("Cpf")
+                    b.Property<string>("CPF")
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -38,7 +38,8 @@ namespace Cliente.API.Migrations
 
                     b.Property<string>("EnderecoCEP")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -50,20 +51,20 @@ namespace Cliente.API.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<decimal>("RendimentoMensal")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Rg")
+                    b.Property<string>("RG")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("Cpf");
+                    b.Property<decimal>("RendimentoMensal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CPF");
 
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Cliente.API.Models.Endereco", b =>
+            modelBuilder.Entity("Cliente.API.Models.EnderecoEntidade", b =>
                 {
                     b.Property<string>("CEP")
                         .HasMaxLength(8)
@@ -79,7 +80,7 @@ namespace Cliente.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("CpfCliente")
+                    b.Property<string>("ClienteCPF")
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");

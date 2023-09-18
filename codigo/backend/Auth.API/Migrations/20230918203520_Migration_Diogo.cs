@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Auth.API.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationDiogo : Migration
+    public partial class Migration_Diogo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
