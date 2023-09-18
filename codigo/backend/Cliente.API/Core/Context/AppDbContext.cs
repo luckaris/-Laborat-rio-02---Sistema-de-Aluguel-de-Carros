@@ -5,11 +5,16 @@ namespace Cliente.API.Core.Context;
 
 public class AppDbContext : DbContext
 {
+    public DbSet<ClienteEntidade> Clientes => Set<ClienteEntidade>();
+    public DbSet<EnderecoEntidade> Enderecos => Set<EnderecoEntidade>();
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
 
     }
 
-    public DbSet<ClienteModel> Clientes => Set<ClienteModel>();
-    public DbSet<Endereco> Enderecos => Set<Endereco>();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+
+    }
 }
