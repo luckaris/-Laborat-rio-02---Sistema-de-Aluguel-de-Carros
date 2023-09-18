@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { LoginService } from "../../services";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -14,10 +15,14 @@ export const Login = () => {
       email: Yup.string().email("Email invalido").required("Campo obrigatório"),
       password: Yup.string().required("Campo obrigatório"),
     }),
-    onSubmit: (values) => {
-      console.log("values", values);
-      localStorage.setItem("token", "1");
-      navigate("/");
+    onSubmit: async (values) => {
+      try {
+        const token = await LoginService.login(values.email, values.password);
+        localStorage.setItem("token", token);
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
