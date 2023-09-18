@@ -3,23 +3,28 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { LoginService } from "../../services";
 
-export const Login = () => {
+export const SignUp = () => {
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
+      userName: "",
       email: "",
       password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Email invalido").required("Campo obrigatório"),
       password: Yup.string().required("Campo obrigatório"),
+      userName: Yup.string().required("Campo obrigatório"),
     }),
     onSubmit: async (values) => {
       try {
-        const token = await LoginService.login(values.email, values.password);
-        localStorage.setItem("token", token);
-        navigate("/");
+        await LoginService.signUp(
+          values.email,
+          values.password,
+          values.userName
+        );
+        navigate("/login");
       } catch (error) {
         console.error(error);
       }
@@ -35,7 +40,23 @@ export const Login = () => {
           }}
           className="card-body flex flex-col gap-6 justify-center bg-base-200 shadow-xl"
         >
-          <p className="text-xl">Aluguel de carros</p>
+          <p className="text-xl">Cadastro Usuario</p>
+          <input
+            value={formik.values.userName}
+            onChange={formik.handleChange}
+            id="userName"
+            name="userName"
+            type="text"
+            placeholder="Nome"
+            className="input w-full max-w-xs"
+          />
+          {formik.errors.userName && formik.touched.userName && (
+            <label className="label">
+              <span className="label-text-alt text-error">
+                {formik.errors.userName}
+              </span>
+            </label>
+          )}
           <input
             value={formik.values.email}
             onChange={formik.handleChange}
@@ -68,11 +89,8 @@ export const Login = () => {
               </span>
             </label>
           )}
-          <input type="submit" className="btn btn-primary" value="login" />
+          <input type="submit" className="btn btn-primary" value="Sign up" />
         </form>
-        <button className="btn btn-link" onClick={() => navigate("/signUp")}>
-          Sign Up
-        </button>
       </div>
     </div>
   );

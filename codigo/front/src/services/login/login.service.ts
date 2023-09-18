@@ -1,10 +1,18 @@
-import api from "..";
+import { apiAuth } from "..";
 
 export class LoginService {
   static async login(email: string, password: string) {
-    const response = await api.post("/login", {
+    const response = await apiAuth.post("/login", {
       email,
-      password,
+      senha: password,
+    });
+    return response.data;
+  }
+  static async signUp(email: string, password: string, userName: string) {
+    const response = await apiAuth.post("/register", {
+      nomeDeUsuario: userName,
+      email,
+      senha: password,
     });
     return response.data;
   }
