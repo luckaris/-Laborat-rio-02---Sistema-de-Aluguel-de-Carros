@@ -10,7 +10,8 @@ export const Router = (): ReactElement => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route element={<PrivateWrapper />}>
-        <Route index element={<Home />} />
+        <Route index element={<Home />} />{" "}
+        {/* / rota inicial equivale ao barra do login.component */}
       </Route>
     </Routes>
   );
