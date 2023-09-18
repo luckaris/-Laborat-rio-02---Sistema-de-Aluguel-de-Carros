@@ -1,6 +1,7 @@
 using Auth.API.Core.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -36,6 +37,15 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+});
+var MyAllowSpecificOrigins = "MyCors";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, 
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7106", "http://localhost:5254").AllowAnyHeader().AllowAnyMethod();
+        });
 });
 
 var connectionString = builder.Configuration.GetConnectionString("local");
@@ -90,6 +100,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
