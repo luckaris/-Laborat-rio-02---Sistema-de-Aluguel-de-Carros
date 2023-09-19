@@ -1,9 +1,9 @@
 import { apiAuth } from "..";
 
 export class LoginService {
-  static async login(email: string, password: string) {
+  static async login(userName: string, password: string) {
     const response = await apiAuth.post("/login", {
-      email,
+      nomeDeUsuario: userName,
       senha: password,
     });
     return response.data;

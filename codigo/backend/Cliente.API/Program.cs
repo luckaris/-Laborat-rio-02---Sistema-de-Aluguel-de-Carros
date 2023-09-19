@@ -4,10 +4,11 @@ using Cliente.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var allowAll = "allowAll";
 
 var connectionString = builder.Configuration.GetConnectionString("local");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-
+builder.Services.AddCors(options => options.AddPolicy(name: allowAll, policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(allowAll);
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

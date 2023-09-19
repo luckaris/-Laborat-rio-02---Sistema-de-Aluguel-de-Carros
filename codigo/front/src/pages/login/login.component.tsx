@@ -8,16 +8,19 @@ export const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      userName: "",
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Email invalido").required("Campo obrigatório"),
+      userName: Yup.string().required("Campo obrigatório"),
       password: Yup.string().required("Campo obrigatório"),
     }),
     onSubmit: async (values) => {
       try {
-        const token = await LoginService.login(values.email, values.password);
+        const token = await LoginService.login(
+          values.userName,
+          values.password
+        );
         localStorage.setItem("token", token);
         navigate("/");
       } catch (error) {
@@ -37,18 +40,18 @@ export const Login = () => {
         >
           <p className="text-xl">Aluguel de carros</p>
           <input
-            value={formik.values.email}
+            value={formik.values.userName}
             onChange={formik.handleChange}
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
+            id="userName"
+            name="userName"
+            type="userName"
+            placeholder="userName"
             className="input w-full max-w-xs"
           />
-          {formik.errors.email && formik.touched.email && (
+          {formik.errors.userName && formik.touched.userName && (
             <label className="label">
               <span className="label-text-alt text-error">
-                {formik.errors.email}
+                {formik.errors.userName}
               </span>
             </label>
           )}
