@@ -4,6 +4,9 @@ namespace Autenticacao.API.Models;
 
 public class Endereco
 {
+    [JsonProperty("cep")]
+    public string CEP { get; set; } = string.Empty;
+
     [JsonProperty("rua")]
     public string Rua { get; set; } = string.Empty;
 

@@ -4,10 +4,12 @@ using Microsoft.Azure.Cosmos;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var allowAll = "allowAll";
 var linkEndpointUri = builder.Configuration["AzureCosmosDbSettings:EndpointUri"];
 var chavePrimariaDeConexao = builder.Configuration["AzureCosmosDbSettings:PrimaryKey"];
 var nomeDoBancoDeDados = builder.Configuration["AzureCosmosDbSettings:DatabaseName"];
 
+builder.Services.AddCors(options => options.AddPolicy(name: allowAll, policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,6 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(allowAll);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
