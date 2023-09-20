@@ -36,13 +36,13 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
             var usuario = new UsuarioDocumento()
             {
                 Nome = dadosUsuario.Nome,
-                RG = dadosUsuario.RG,
+                RG = "",
                 CPF = dadosUsuario.CPF,
                 Senha = dadosUsuario.Senha,
-                Endereco = dadosUsuario.Endereco,
-                Profissao = dadosUsuario.Profissao,
-                Empregador = dadosUsuario.Empregador,
-                RendimentoMensal = dadosUsuario.RendimentoMensal
+                Endereco = new Endereco(),
+                Profissao = "",
+                Empregador = "",
+                RendimentoMensal = -1
             };
             var response = await _container.CreateItemAsync(usuario);
             return response.Resource;

@@ -52,13 +52,13 @@ public class UsuarioDocumento
         Id = guid;
         UsuarioId = guid;
         Nome = dto.Nome;
-        RG = dto.RG;
+        RG = "";
         CPF = dto.CPF;
         Senha = dto.Senha;
-        Endereco = dto.Endereco;
-        Profissao = dto.Profissao;
-        Empregador = dto.Empregador;
-        RendimentoMensal = dto.RendimentoMensal;
+        Endereco = new Endereco();
+        Profissao = "";
+        Empregador = "";
+        RendimentoMensal = -1;
         Permissao = EPermissaoAcesso.CLIENTE.ToString();
     }
 }
