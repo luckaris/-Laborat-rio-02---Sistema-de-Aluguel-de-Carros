@@ -30,11 +30,13 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
     {
         try
         {
+            string guid = Guid.NewGuid().ToString();
             var usuarioBuscado = await BuscarPeloCPF(dadosUsuario.CPF);
             if(usuarioBuscado != null) return null!;
-            
             var usuario = new UsuarioDocumento()
             {
+                Id = guid,
+                UsuarioId = guid,
                 Nome = dadosUsuario.Nome,
                 RG = "",
                 CPF = dadosUsuario.CPF,
@@ -42,7 +44,8 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
                 Endereco = new Endereco(),
                 Profissao = "",
                 Empregador = "",
-                RendimentoMensal = -1
+                RendimentoMensal = -1,
+                Permissao = EPermissaoAcesso.CLIENTE.ToString()
             };
             var response = await _container.CreateItemAsync(usuario);
             return response.Resource;
@@ -67,7 +70,6 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
                 var response = await consulta.ReadNextAsync();
                 usuarios.AddRange(response);
             }
-
             return usuarios.FirstOrDefault()!;
         }
         catch
@@ -81,16 +83,13 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         try
         {
             var consulta = _container.GetItemLinqQueryable<UsuarioDocumento>()
-                .Where(c => c.CPF.Equals(cpf))
-                .ToFeedIterator();
-
+                .Where(c => c.CPF.Equals(cpf)).ToFeedIterator();
             var usuarios = new List<UsuarioDocumento>();
             while (consulta.HasMoreResults)
             {
                 var response = await consulta.ReadNextAsync();
                 usuarios.AddRange(response);
             }
-
             return usuarios.FirstOrDefault()!;
         }
         catch
