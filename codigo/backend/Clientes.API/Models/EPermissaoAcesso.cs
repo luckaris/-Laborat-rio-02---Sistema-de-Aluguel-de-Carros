@@ -3,6 +3,5 @@
 public enum EPermissaoAcesso
 {
     CLIENTE,
-    EMPRESA,
-    BANCO
+    EMPRESA
 }
