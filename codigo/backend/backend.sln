@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autenticacao.API", "Autenti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clientes.API", "Clientes.API\Clientes.API.csproj", "{919F591B-2CCE-4493-A087-E260EE5CF632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veiculos.API", "Veiculos.API\Veiculos.API.csproj", "{138C7CE3-0A37-4A39-B3E3-76D88E5A0A30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automoveis.API", "Automoveis.API\Automoveis.API.csproj", "{CC664AE0-18AB-42C1-990C-425C63919DAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{919F591B-2CCE-4493-A087-E260EE5CF632}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{919F591B-2CCE-4493-A087-E260EE5CF632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{919F591B-2CCE-4493-A087-E260EE5CF632}.Release|Any CPU.Build.0 = Release|Any CPU
-		{138C7CE3-0A37-4A39-B3E3-76D88E5A0A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{138C7CE3-0A37-4A39-B3E3-76D88E5A0A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{138C7CE3-0A37-4A39-B3E3-76D88E5A0A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{138C7CE3-0A37-4A39-B3E3-76D88E5A0A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
