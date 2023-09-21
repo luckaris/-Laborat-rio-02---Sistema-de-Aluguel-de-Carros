@@ -7,7 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autenticacao.API", "Autenti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clientes.API", "Clientes.API\Clientes.API.csproj", "{919F591B-2CCE-4493-A087-E260EE5CF632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automoveis.API", "Automoveis.API\Automoveis.API.csproj", "{CC664AE0-18AB-42C1-990C-425C63919DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Automoveis.API", "Automoveis.API\Automoveis.API.csproj", "{CC664AE0-18AB-42C1-990C-425C63919DAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedidos.API", "Pedidos.API\Pedidos.API.csproj", "{7944EF76-35C2-4BB1-B1B0-530E61003C99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{19EDC8DA-5C65-4D35-8F91-4596E30E3651}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empresas.API", "Empresas.API\Empresas.API.csproj", "{8016C635-8754-42DD-8DBB-BE64C82F9DAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +36,14 @@ Global
 		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC664AE0-18AB-42C1-990C-425C63919DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7944EF76-35C2-4BB1-B1B0-530E61003C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7944EF76-35C2-4BB1-B1B0-530E61003C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7944EF76-35C2-4BB1-B1B0-530E61003C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7944EF76-35C2-4BB1-B1B0-530E61003C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8016C635-8754-42DD-8DBB-BE64C82F9DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8016C635-8754-42DD-8DBB-BE64C82F9DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8016C635-8754-42DD-8DBB-BE64C82F9DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8016C635-8754-42DD-8DBB-BE64C82F9DAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
