@@ -1,5 +1,4 @@
-﻿using Autenticacao.API.Core.Dto;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Autenticacao.API.Models;
 

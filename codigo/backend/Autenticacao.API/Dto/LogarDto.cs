@@ -1,7 +1,7 @@
 ﻿using Autenticacao.API.Models;
 using Newtonsoft.Json;
 
-namespace Autenticacao.API.Core.Dto;
+namespace Autenticacao.API.Dto;
 
 public class LogarDto
 {

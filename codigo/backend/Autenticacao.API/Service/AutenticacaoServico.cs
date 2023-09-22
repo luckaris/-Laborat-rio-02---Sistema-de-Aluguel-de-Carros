@@ -1,4 +1,4 @@
-﻿using Autenticacao.API.Core.Dto;
+﻿using Autenticacao.API.Dto;
 using Autenticacao.API.Models;
 using Autenticacao.API.Repository;
 using Microsoft.Azure.Cosmos;
@@ -32,7 +32,7 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         {
             string guid = Guid.NewGuid().ToString();
             var usuarioBuscado = await BuscarPeloCPF(dadosUsuario.CPF);
-            if(usuarioBuscado != null) return null!;
+            if (usuarioBuscado != null) return null!;
             var usuario = new UsuarioDocumento()
             {
                 Id = guid,

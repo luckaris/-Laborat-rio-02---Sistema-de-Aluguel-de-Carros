@@ -1,4 +1,4 @@
-﻿using Autenticacao.API.Core.Dto;
+﻿using Autenticacao.API.Dto;
 using Autenticacao.API.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
