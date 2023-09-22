@@ -1,15 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace Automoveis.API.Models;
+namespace Automoveis.API.Dto;
 
-public class AutomovelDocumento
+public class ListarDto
 {
-    [JsonProperty("id")]
-    public string Id { get; set; } = string.Empty;
-
-    [JsonProperty("automovelId")]
-    public string AutomovelId { get; set; } = string.Empty;
-
     [JsonProperty("renavam")]
     public string Renavam { get; set; } = string.Empty;
 
