@@ -17,7 +17,7 @@ public class CadastrarClienteDto
     public required string Senha { get; set; }
 
     [JsonProperty("endereco")]
-    public Endereco? Endereco { get; set; }
+    public string? Endereco { get; set; }
 
     [JsonProperty("profissao")]
     public required string Profissao { get; set; }
