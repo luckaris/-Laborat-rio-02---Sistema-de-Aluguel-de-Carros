@@ -1,4 +1,4 @@
-﻿namespace Clientes.API.Models;
+﻿namespace Models.ClientesModels;
 
 public enum EPermissaoAcesso
 {

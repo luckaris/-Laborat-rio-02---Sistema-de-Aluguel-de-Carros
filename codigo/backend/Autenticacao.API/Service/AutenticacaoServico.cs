@@ -90,13 +90,7 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         }
     }
 
-    /// <summary>
-    /// Método privado que busca um usuário pelo seu identificador único.
-    /// </summary>
-    /// <param name="identificador">Identificador único do usupario.</param>
-    /// <returns>UsuarioDocumento</returns>
-    /// <exception cref="Exception"></exception>
-    private async Task<UsuarioDocumento> BuscarPeloIdentificador(string identificador)
+    public async Task<UsuarioDocumento> BuscarPeloIdentificador(string identificador)
     {
         try
         {

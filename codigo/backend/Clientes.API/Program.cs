@@ -1,3 +1,5 @@
+using Autenticacao.API.Repository;
+using Autenticacao.API.Service;
 using Clientes.API.Repository;
 using Clientes.API.Services;
 using Microsoft.Azure.Cosmos;
@@ -29,6 +31,7 @@ builder.Services.AddSingleton(provider =>
     return cosmosClient;
 });
 builder.Services.AddScoped<IClienteRepositorio, ClienteServico>();
+builder.Services.AddScoped<IAutenticacaoRepositorio, AutenticacaoServico>();
 
 var app = builder.Build();
 

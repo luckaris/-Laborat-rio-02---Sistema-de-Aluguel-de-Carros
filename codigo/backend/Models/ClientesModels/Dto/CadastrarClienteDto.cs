@@ -1,9 +1,8 @@
-﻿using Clientes.API.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Clientes.API.Core.Dto;
+namespace Models.ClientesModels.Dto;
 
-public class CadastrarDto
+public class CadastrarClienteDto
 {
     [JsonProperty("nome")]
     public required string Nome { get; set; }

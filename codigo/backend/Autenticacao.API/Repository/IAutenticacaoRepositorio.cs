@@ -19,4 +19,11 @@ public interface IAutenticacaoRepositorio
     /// <param name="dto">Dados enviados pelo usuário no corpo da requisição.</param>
     /// <returns>UsuarioDocumento</returns>
     Task<UsuarioDocumento> BuscarPelasCredenciais(LogarUsuarioDto dto);
+
+    /// <summary>
+    /// Busca um usuário pelo seu identificador
+    /// </summary>
+    /// <param name="identificador">Identificador de usuário</param>
+    /// <returns>UsuarioDocumento</returns>
+    Task<UsuarioDocumento> BuscarPeloIdentificador(string identificador);
 }

@@ -1,7 +1,6 @@
-﻿using Clientes.API.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Clientes.API.Core.Dto;
+namespace Models.ClientesModels.Dto;
 
 public class ListarDto
 {
