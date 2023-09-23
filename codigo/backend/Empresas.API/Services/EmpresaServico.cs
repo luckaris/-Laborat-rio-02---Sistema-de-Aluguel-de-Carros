@@ -44,39 +44,16 @@ public class EmpresaServico : IEmpresaRepositorio
         }
         catch (Exception)
         {
-            throw new Exception($"Erro ao consultar todas as empresas.");
-        }
-    }
-
-    public async Task<EmpresaDocumento> ObterPorEmpresaId(string empresaId)
-    {
-        try
-        {
-            var consulta = _container.GetItemLinqQueryable<EmpresaDocumento>()
-            .Where(c => c.EmpresaId.Equals(empresaId)).ToFeedIterator();
-            var empresas = new List<EmpresaDocumento>();
-
-            while (consulta.HasMoreResults)
-            {
-                var resposta = await consulta.ReadNextAsync();
-                empresas.AddRange(resposta);
-            }
-
-            var cliente = empresas.FirstOrDefault()!;
-            return cliente;
-        }
-        catch (Exception)
-        {
-            throw new Exception($"Erro ao consultar empresa pelo ID de Empresa.");
+            throw new Exception("Houve um erro ao consultar todas as empresas.");
         }
     }
     
-    public async Task<EmpresaDocumento> ObterPorId(string id)
+    public async Task<string> ObterId(string credencial)
     {
         try
         {
             var consulta = _container.GetItemLinqQueryable<EmpresaDocumento>()
-                .Where(c => c.Id.Equals(id)).ToFeedIterator();
+                .Where(c => c.CNPJ.Equals(credencial)).ToFeedIterator();
             var clientes = new List<EmpresaDocumento>();
 
             while (consulta.HasMoreResults)
@@ -86,11 +63,11 @@ public class EmpresaServico : IEmpresaRepositorio
             }
 
             var cliente = clientes.FirstOrDefault()!;
-            return cliente;
+            return cliente.Id;
         }
         catch (Exception)
         {
-            throw new Exception($"Erro ao consultar empresa pelo ID.");
+            throw new Exception("Houve um erro ao consultar empresa pelo ID.");
         }
     }
 
@@ -113,7 +90,7 @@ public class EmpresaServico : IEmpresaRepositorio
         }
         catch (Exception)
         {
-            throw new Exception($"Erro ao consultar empresa pelo CNPJ.");
+            throw new Exception("Houve um erro ao consultar empresa pelo CNPJ.");
         }
     }
 
@@ -129,6 +106,7 @@ public class EmpresaServico : IEmpresaRepositorio
             {
                 Id = guid,
                 EmpresaId = guid,
+                Nome = empresa.Nome,
                 CNPJ = empresa.CNPJ,
                 Clientes = new List<ClienteDto>(),
                 Bancos = new List<BancoDto>()
@@ -138,18 +116,20 @@ public class EmpresaServico : IEmpresaRepositorio
         }
         catch (Exception)
         {
-            throw new Exception($"Erro ao cadastrar uma empresa.");
+            throw new Exception("Houve um erro ao cadastrar uma empresa.");
         }
     }
 
-    public async Task<EmpresaDocumento> Atualizar(string id, AtualizarDto documento)
+    public async Task<EmpresaDocumento> Atualizar(string credencial, AtualizarDto documento)
     {
         try
         {
+            string id = await ObterId(credencial);
             var empresa = new EmpresaDocumento()
             {
                 Id = id,
                 EmpresaId = id,
+                Nome= documento.Nome,
                 CNPJ = documento.CNPJ,
                 Clientes = documento.Clientes,
                 Bancos = documento.Bancos
@@ -157,22 +137,23 @@ public class EmpresaServico : IEmpresaRepositorio
             var resposta = await _container.ReplaceItemAsync(empresa, id);
             return resposta.Resource;
         }
-        catch (Exception)
+        catch
         {
-            throw new Exception($"Erro ao atualizar os dados de uma empresa");
+            throw new Exception("Houve um erro ao atualizar os dados de uma empresa");
         }
     }
     
-    public async Task<EmpresaDocumento> Apagar(string id, string empresaId)
+    public async Task<EmpresaDocumento> Apagar(string credencial)
     {
         try
         {
-            var resposta = await _container.DeleteItemAsync<EmpresaDocumento>(id, new PartitionKey(empresaId));
+            string id = await ObterId(credencial);
+            var resposta = await _container.DeleteItemAsync<EmpresaDocumento>(id, new PartitionKey(id));
             return resposta.Resource;
         }
-        catch (Exception e)
+        catch
         {
-            throw new Exception($"Erro ao apagar uma empresa. Detalhes técnicos: {e.Message}");
+            throw new Exception("Houve um erro ao apagar uma empresa.");
         }
     }
 }

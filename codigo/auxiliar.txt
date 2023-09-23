@@ -1,0 +1,39 @@
+DADOS DE CLIENTE:
+
+{
+   "nome": "Pedro Henrique Márcio da Luz",
+   "identificador": "25715299608",
+   "senha": "pedro",
+   "tipo": "CLIENTE"
+}
+{
+   "nome": "Iago Tomás Lucca Gonçalves",
+   "identificador": "67396613671",
+   "senha": "iago",
+   "tipo": "CLIENTE"
+}
+{
+   "nome": "Renato Gael Fogaça",
+   "idade": 21,
+   "identificador": "22765549672",
+   "senha": "renato",
+   "tipo": "CLIENTE"
+}
+{
+   "nome": "Lorenzo Caio Theo dos Santos",
+   "identificador": "29897523669",
+   "senha": "lorenzo",
+   "tipo": "CLIENTE"
+}
+{
+   "nome": "Bernardo Thiago César Castro",
+   "identificador": "82711639657",
+   "senha": "bernardo",
+   "tipo": "CLIENTE"
+}
+{
+   "nome": "Ian Nicolas Iago Pinto",
+   "identificador": "17774115641",
+   "senha": "ian",
+   "tipo": "CLIENTE"
+}
