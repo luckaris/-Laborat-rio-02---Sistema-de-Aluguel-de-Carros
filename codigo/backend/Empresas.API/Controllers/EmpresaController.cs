@@ -22,50 +22,10 @@ public class EmpresaController : ControllerBase
         return Ok(GerarListaParaMostrarNaTela(empresas));
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> ObterPorId([FromRoute] string id)
-    {
-        var empresa = await _empresaRepositorio.ObterPorId(id);
-        if (empresa is null)
-        {
-            return NotFound(new
-            {
-                status = StatusCodes.Status404NotFound.ToString(),
-                message = "Empresa não foi encontrada."
-            });
-        }
-        return Ok(new ListarDto()
-        {
-            CNPJ = empresa.CNPJ,
-            Clientes = empresa.Clientes,
-            Bancos = empresa.Bancos,
-        });
-    }
-
-    [HttpGet("empresaId/{empresaId}")]
-    public async Task<IActionResult> ObterPelaEmpresaId([FromRoute] string empresaId)
-    {
-        var empresa = await _empresaRepositorio.ObterPorEmpresaId(empresaId);
-        if (empresa is null)
-        {
-            return NotFound(new
-            {
-                status = StatusCodes.Status404NotFound.ToString(),
-                message = "Empresa não foi encontrado."
-            });
-        }
-        return Ok(new ListarDto()
-        {
-            CNPJ = empresa.CNPJ,
-            Clientes = empresa.Clientes,
-            Bancos = empresa.Bancos
-        });
-    }
-
-    [HttpGet("cnpj/{cnpj}")]
+    [HttpGet("{cnpj}")]
     public async Task<IActionResult> ObterPeloCNPJ([FromRoute] string cnpj)
     {
-        var empresa = await _empresaRepositorio.ObterPeloCNPJ(cnpj);
+        var empresa = await _empresaRepositorio.ObterPelasCredenciais(cnpj);
         if (empresa is null)
         {
             return NotFound(new
@@ -121,7 +81,7 @@ public class EmpresaController : ControllerBase
     [HttpDelete("{cnpj}")]
     public async Task<IActionResult> Apagar([FromRoute] string cnpj)
     {
-        var empresaEncontrada = await _empresaRepositorio.ObterPeloCNPJ(cnpj);
+        var empresaEncontrada = await _empresaRepositorio.ObterPelasCredenciais(cnpj);
         if (empresaEncontrada is null)
         {
             return NotFound(new
@@ -130,7 +90,7 @@ public class EmpresaController : ControllerBase
                 message = "Empresa não foi encontrada."
             });
         }
-        var cliente = await _empresaRepositorio.Apagar(empresaEncontrada.Id, empresaEncontrada.EmpresaId);
+        var cliente = await _empresaRepositorio.Apagar(cnpj);
         if (cliente != null)
         {
             return BadRequest(new

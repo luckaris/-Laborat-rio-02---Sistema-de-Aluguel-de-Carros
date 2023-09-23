@@ -71,12 +71,12 @@ public class EmpresaServico : IEmpresaRepositorio
         }
     }
 
-    public async Task<EmpresaDocumento> ObterPeloCNPJ(string cnpj)
+    public async Task<EmpresaDocumento> ObterPelasCredenciais(string credencial)
     {
         try
         {
             var consulta = _container.GetItemLinqQueryable<EmpresaDocumento>()
-                .Where(c => c.CNPJ.Equals(cnpj)).ToFeedIterator();
+                .Where(c => c.CNPJ.Equals(credencial)).ToFeedIterator();
             var empresas = new List<EmpresaDocumento>();
 
             while (consulta.HasMoreResults)
@@ -98,7 +98,7 @@ public class EmpresaServico : IEmpresaRepositorio
     {
         try
         {
-            var empresaEncontrada = await ObterPeloCNPJ(empresa.CNPJ);
+            var empresaEncontrada = await ObterPelasCredenciais(empresa.CNPJ);
             if (empresaEncontrada != null) return null!;
 
             string guid = Guid.NewGuid().ToString();
