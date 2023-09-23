@@ -1,16 +1,16 @@
 import { apiAuth } from "..";
 
 export class LoginService {
-  static async login(userName: string, password: string) {
-    const response = await apiAuth.post("/login", {
-      nomeDeUsuario: userName,
+  static async login(identifier: string, password: string) {
+    const response = await apiAuth.post("/api/autenticacao/logar", {
+      identificador: identifier,
       senha: password,
     });
-    return response.data;
+    return response.data.token;
   }
-  static async signUp(email: string, password: string, userName: string) {
-    const response = await apiAuth.post("/register", {
-      nomeDeUsuario: userName,
+  static async signUp(email: string, password: string, identifier: string) {
+    const response = await apiAuth.post("/api/autenticacao/registrar", {
+      nomeDeUsuario: identifier,
       email,
       senha: password,
     });

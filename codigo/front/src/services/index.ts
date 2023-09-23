@@ -1,18 +1,20 @@
 import axios from "axios";
 
-const apiCliente = axios.create({
-  baseURL: "https://localhost:7247",
+const apiClient = axios.create({
+  baseURL: "https://localhost:7056",
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
 const apiAuth = axios.create({
-  baseURL: "https://localhost:7106/api/auth",
+  baseURL: "https://localhost:7105",
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
@@ -24,5 +26,5 @@ apiAuth.interceptors.request.use(async (config) => {
   return config;
 });
 
-export { apiCliente, apiAuth };
+export { apiClient, apiAuth };
 export * from "./login";
