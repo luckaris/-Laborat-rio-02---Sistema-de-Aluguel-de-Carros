@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Automoveis.API.Dto;
+namespace Models.AutomoveisModels.Dto;
 
-public class CadastrarDto
+public class CadastrarAutomovelDto
 {
     [JsonProperty("renavam")]
     public required string Renavam { get; set; }
@@ -20,5 +20,8 @@ public class CadastrarDto
     public required string Placa { get; set; }
 
     [JsonProperty("mensalidade")]
-    public decimal Mensalidade { get; set; }
+    public required decimal Mensalidade { get; set; }
+
+    [JsonProperty("status")]
+    public string Status { get; set; } = string.Empty;
 }

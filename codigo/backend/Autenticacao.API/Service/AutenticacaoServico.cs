@@ -32,7 +32,7 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         _container = _cosmosClient.GetContainer(nomeDoBancoDeDados, nomeDoContainer);
     }
 
-    public async Task<UsuarioDocumento> Criar(CadastrarDto dto)
+    public async Task<UsuarioDocumento> Criar(CadastrarUsuarioDto dto)
     {
         try
         {
@@ -62,7 +62,7 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         }
     }
 
-    public async Task<UsuarioDocumento> BuscarPelasCredenciais(LogarDto dto)
+    public async Task<UsuarioDocumento> BuscarPelasCredenciais(LogarUsuarioDto dto)
     {
         try
         {

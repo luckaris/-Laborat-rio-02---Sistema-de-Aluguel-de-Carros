@@ -34,7 +34,7 @@ public class AutenticacaoController : ControllerBase
     /// <param name="dto">Dados informados pelo usuário no corpo da requisição.</param>
     /// <returns>IActionResult</returns>
     [HttpPost("registrar")]
-    public async Task<IActionResult> Registrar([FromBody] CadastrarDto dto)
+    public async Task<IActionResult> Registrar([FromBody] CadastrarUsuarioDto dto)
     {
         var resposta = await _autenticacaoRepositorio.Criar(dto);
         if (resposta is null)
@@ -60,7 +60,7 @@ public class AutenticacaoController : ControllerBase
     /// <param name="dto">Credenciais de acesso informadas pelo usuário no banco de dados.</param>
     /// <returns>IActionResult</returns>
     [HttpPost("logar")]
-    public async Task<IActionResult> Logar([FromBody] LogarDto dto)
+    public async Task<IActionResult> Logar([FromBody] LogarUsuarioDto dto)
     {
         var resposta = await _autenticacaoRepositorio.BuscarPelasCredenciais(dto);
         if (resposta is null)

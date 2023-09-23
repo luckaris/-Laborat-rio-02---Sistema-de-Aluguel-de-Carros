@@ -11,12 +11,12 @@ public interface IAutenticacaoRepositorio
     /// </summary>
     /// <param name="dto">Dados enviado pelo usuário no corpo da requisição.</param>
     /// <returns>UsuarioDocumento</returns>
-    Task<UsuarioDocumento> Criar(CadastrarDto dto);
+    Task<UsuarioDocumento> Criar(CadastrarUsuarioDto dto);
 
     /// <summary>
     /// Busca um usuário de acordo com as credenciais de acesso do mesmo.
     /// </summary>
     /// <param name="dto">Dados enviados pelo usuário no corpo da requisição.</param>
     /// <returns>UsuarioDocumento</returns>
-    Task<UsuarioDocumento> BuscarPelasCredenciais(LogarDto dto);
+    Task<UsuarioDocumento> BuscarPelasCredenciais(LogarUsuarioDto dto);
 }
