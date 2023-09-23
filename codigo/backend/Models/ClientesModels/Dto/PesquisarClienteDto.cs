@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Clientes.API.Core.Dto;
+namespace Models.ClientesModels.Dto;
 
-public class PesquisarDto
+public class PesquisarClienteDto
 {
     [JsonProperty("nome")]
     public string Nome { get; set; } = string.Empty;

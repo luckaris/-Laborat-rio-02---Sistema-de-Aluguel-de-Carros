@@ -1,17 +1,14 @@
-﻿using Clientes.API.Core.Dto;
-using Clientes.API.Models;
+﻿using Models.ClientesModels;
+using Models.ClientesModels.Dto;
 
 namespace Clientes.API.Repository;
 
 public interface IClienteRepositorio
 {
-    Task<IEnumerable<UsuarioDocumento>> ObterTodos(int paginacao = 0);
-    Task<UsuarioDocumento> ObterPorId(string id);
-    Task<UsuarioDocumento> ObterPeloUsuarioId(string customerId);
-    Task<UsuarioDocumento> ObterPeloCPF(string cpf);
-    Task<UsuarioDocumento> ObterPeloRG(string rg);
-    Task<IEnumerable<UsuarioDocumento>> ObterPeloNome(string nome);
-    Task<UsuarioDocumento> Criar(CadastrarDto novoCliente);
-    Task<UsuarioDocumento> Atualizar(string id, AtualizarDto dadosNovos);
-    Task<UsuarioDocumento> Apagar(string id, string usuarioId);
+    Task<IEnumerable<ClienteDocumento>> ObterTodos(int paginacao = 0);
+    Task<ClienteDocumento> ObterPelasCredenciais(string credencial);
+    Task<IEnumerable<ClienteDocumento>> ObterPeloNome(string nome);
+    Task<ClienteDocumento> Criar(CadastrarClienteDto dto);
+    Task<ClienteDocumento> Atualizar(string credencial, AtualizarClienteDto dto);
+    Task<ClienteDocumento> Apagar(string credencial);
 }

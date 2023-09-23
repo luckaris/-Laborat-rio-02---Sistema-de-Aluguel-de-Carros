@@ -1,9 +1,7 @@
-﻿using Clientes.API.Core.Dto;
-using Clientes.API.Models;
-using Clientes.API.Repository;
+﻿using Clientes.API.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+using Models.ClientesModels;
+using Models.ClientesModels.Dto;
 
 namespace Clientes.API.Controllers;
 
@@ -17,17 +15,17 @@ public class ClienteController : ControllerBase
         _clienteRepositorio = clienteRepositorio;
     }
 
-    [HttpGet("todos/{paginacao}")]
+    [HttpGet("todos/{paginacao:int}")]
     public async Task<IActionResult> ObterTodos([FromRoute] int paginacao)
     {
         var clientes = await _clienteRepositorio.ObterTodos(paginacao);
-        return Ok(GerarListaParaMostrarNaTela(clientes));
+        return Ok(GerarListaParaMostrarNaTela(clientes.ToList()));
     }
 
-    [HttpGet("id/{id}")]
-    public async Task<IActionResult> ObterPorId([FromRoute] string id)
+    [HttpGet("{credencial}")]
+    public async Task<IActionResult> ObterPelaCredencial([FromRoute] string credencial)
     {
-        var cliente = await _clienteRepositorio.ObterPorId(id);
+        var cliente = await _clienteRepositorio.ObterPelasCredenciais(credencial);
         if (cliente is null)
         {
             return NotFound(new
@@ -36,63 +34,27 @@ public class ClienteController : ControllerBase
                 message = "Cliente não foi encontrado."
             });
         }
-        return Ok(GerarListaParaMostrarNaTela(new[] { cliente })[0]);
-    }
-
-    [HttpGet("usuarioId/{usuarioId}")]
-    public async Task<IActionResult> ObterPeloUsuarioId([FromRoute] string usuarioId)
-    {
-        var cliente = await _clienteRepositorio.ObterPeloUsuarioId(usuarioId);
-        if (cliente is null)
+        return Ok(new ListarDto()
         {
-            return NotFound(new
-            {
-                status = StatusCodes.Status404NotFound.ToString(),
-                message = "Cliente não foi encontrado."
-            });
-        }
-        return Ok(GerarListaParaMostrarNaTela(new[] { cliente })[0]);
-    }
-
-    [HttpGet("cpf/{cpf}")]
-    public async Task<IActionResult> ObterPeloCPF([FromRoute] string cpf)
-    {
-        var cliente = await _clienteRepositorio.ObterPeloCPF(cpf);
-        if (cliente is null)
-        {
-            return NotFound(new
-            {
-                status = StatusCodes.Status404NotFound.ToString(),
-                message = "Cliente não foi encontrado."
-            });
-        }
-        return Ok(GerarListaParaMostrarNaTela(new[] { cliente })[0]);
-    }
-
-    [HttpGet("rg/{rg}")]
-    public async Task<IActionResult> ObterPeloRG([FromRoute] string rg)
-    {
-        var cliente = await _clienteRepositorio.ObterPeloRG(rg);
-        if (cliente is null)
-        {
-            return NotFound(new
-            {
-                status = StatusCodes.Status404NotFound.ToString(),
-                message = "Cliente não foi encontrado."
-            });
-        }
-        return Ok(GerarListaParaMostrarNaTela(new[] { cliente })[0]);
+            Nome = cliente.Nome,
+            RG = cliente.RG,
+            CPF = cliente.CPF,
+            Endereco = cliente.Endereco,
+            Profissao = cliente.Profissao,
+            Empregador = cliente.Empregador,
+            RendimentoMensal = cliente.RendimentoMensal
+        });
     }
 
     [HttpPost("pesquisar")]
-    public async Task<IActionResult> ObterPeloNome([FromBody] PesquisarDto dto)
+    public async Task<IActionResult> ObterPeloNome([FromBody] PesquisarClienteDto dto)
     {
         var clientes = await _clienteRepositorio.ObterPeloNome(dto.Nome);
-        return Ok(GerarListaParaMostrarNaTela(clientes));
+        return Ok(GerarListaParaMostrarNaTela(clientes.ToList()));
     }
 
     [HttpPost("cadastrar")]
-    public async Task<IActionResult> Cadastrar([FromBody] CadastrarDto dto)
+    public async Task<IActionResult> Cadastrar([FromBody] CadastrarClienteDto dto)
     {
         var cliente = await _clienteRepositorio.Criar(dto);
         if (cliente == null)
@@ -112,10 +74,10 @@ public class ClienteController : ControllerBase
             });
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Atualizar([FromRoute] string id, [FromBody] AtualizarDto dto)
+    [HttpPut("{cpf}")]
+    public async Task<IActionResult> Atualizar([FromRoute] string cpf, [FromBody] AtualizarClienteDto dto)
     {
-        var cliente = await _clienteRepositorio.Atualizar(id, dto);
+        var cliente = await _clienteRepositorio.Atualizar(cpf, dto);
         if (cliente == null)
         {
             return BadRequest(new
@@ -130,7 +92,7 @@ public class ClienteController : ControllerBase
     [HttpDelete("{cpf}")]
     public async Task<IActionResult> Apagar([FromRoute] string cpf)
     {
-        var clienteEncontrado = await _clienteRepositorio.ObterPeloCPF(cpf);
+        var clienteEncontrado = await _clienteRepositorio.ObterPelasCredenciais(cpf);
         if (clienteEncontrado is null)
         {
             return NotFound(new
@@ -139,8 +101,8 @@ public class ClienteController : ControllerBase
                 message = "Cliente não foi encontrado."
             });
         }
-        var cliente = await _clienteRepositorio.Apagar(clienteEncontrado.Id, clienteEncontrado.UsuarioId);
-        if(cliente != null)
+        var cliente = await _clienteRepositorio.Apagar(cpf);
+        if (cliente != null)
         {
             return BadRequest(new
             {
@@ -155,7 +117,12 @@ public class ClienteController : ControllerBase
         });
     }
 
-    private static List<ListarDto> GerarListaParaMostrarNaTela(IEnumerable<UsuarioDocumento> clientes)
+    /// <summary>
+    /// Gera lista de clientes para mostrar na tela.
+    /// </summary>
+    /// <param name="clientes">Clientes obtidos no banco de dados.</param>
+    /// <returns>List->ListarDto</returns>
+    private static List<ListarDto> GerarListaParaMostrarNaTela(List<ClienteDocumento> clientes)
     {
         List<ListarDto> dtos = new();
         if (clientes.Any())
@@ -170,7 +137,7 @@ public class ClienteController : ControllerBase
                     Endereco = cliente.Endereco,
                     Profissao = cliente.Profissao,
                     Empregador = cliente.Empregador,
-                    RendimentoMensal = cliente.RendimentoMensal
+                    RendimentoMensal = cliente.RendimentoMensal,
                 });
             }
             return dtos;

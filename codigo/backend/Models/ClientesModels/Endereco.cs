@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Clientes.API.Models;
+namespace Models.ClientesModels;
 
 public class Endereco
 {
