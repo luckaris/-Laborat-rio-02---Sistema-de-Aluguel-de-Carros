@@ -1,20 +1,26 @@
-﻿using Autenticacao.API.Dto;
-using Autenticacao.API.Models;
-using Autenticacao.API.Repository;
+﻿using Autenticacao.API.Repository;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Models.AutenticacaoModels;
+using Models.AutenticacaoModels.Dtos;
+using System.Text.Json;
 
 namespace Autenticacao.API.Service;
 
 public class AutenticacaoServico : IAutenticacaoRepositorio
 {
-    private readonly CosmosClient _cosmosClient;
     private readonly IConfiguration _configuracao;
+    private readonly CosmosClient _cosmosClient;
     private readonly Container _container;
+    /// <summary>
+    /// O construtor dessa classe realiza a Injeção de Dependência da classe que implementa da Interface na 
+    /// qual a mesma está sendo passada por parâmetro, essa configuração é definina da classe Program, onde
+    /// chamamos o método AddScoped.
+    /// <br></br>>
+    /// A mesma configura qual Container do Cosmos iremos usar para esse serviço.
+    /// </summary>
+    /// <param name="cosmosClient">Classe do CosmosClient na qual acessaremos o banco de dados.</param>
+    /// <param name="configuration">Interface para obter dados do appsettings.</param>
     public AutenticacaoServico(CosmosClient cosmosClient, IConfiguration configuration)
     {
         _cosmosClient = cosmosClient;
@@ -26,33 +32,33 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         _container = _cosmosClient.GetContainer(nomeDoBancoDeDados, nomeDoContainer);
     }
 
-    public async Task<UsuarioDocumento> Criar(CadastrarDto dadosUsuario)
+    public async Task<UsuarioDocumento> Criar(CadastrarDto dto)
     {
         try
         {
-            string guid = Guid.NewGuid().ToString();
-            var usuarioBuscado = await BuscarPeloCPF(dadosUsuario.CPF);
+            var usuarioBuscado = await BuscarPeloIdentificador(dto.Identificador);
             if (usuarioBuscado != null) return null!;
+
+            string guid = Guid.NewGuid().ToString();
             var usuario = new UsuarioDocumento()
             {
                 Id = guid,
                 UsuarioId = guid,
-                Nome = dadosUsuario.Nome,
-                RG = "",
-                CPF = dadosUsuario.CPF,
-                Senha = dadosUsuario.Senha,
-                Endereco = new Endereco(),
-                Profissao = "",
-                Empregador = "",
-                RendimentoMensal = -1,
-                Permissao = EPermissaoAcesso.CLIENTE.ToString()
+                Nome = dto.Nome,
+                Identificador = dto.Identificador,
+                Senha = dto.Senha,
+                Tipo = dto.Tipo,
             };
             var response = await _container.CreateItemAsync(usuario);
             return response.Resource;
         }
         catch
         {
-            throw new Exception("Erro ao cadastrar um usuário no banco de dados");
+            var error = new
+            {
+                message = "Houve um erro durante o cadastro do usuário"
+            };
+            throw new Exception(JsonSerializer.Serialize(error));
         }
     }
 
@@ -61,7 +67,7 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         try
         {
             var consulta = _container.GetItemLinqQueryable<UsuarioDocumento>()
-                .Where(c => c.CPF.Equals(dto.CPF) && c.Senha.Equals(dto.Senha))
+                .Where(c => c.Identificador.Equals(dto.Identificador) && c.Senha.Equals(dto.Senha))
                 .ToFeedIterator();
 
             var usuarios = new List<UsuarioDocumento>();
@@ -70,6 +76,12 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
                 var response = await consulta.ReadNextAsync();
                 usuarios.AddRange(response);
             }
+            while (consulta.HasMoreResults)
+            {
+                var response = await consulta.ReadNextAsync();
+                usuarios.AddRange(response);
+            }
+            if (usuarios.Count <= 0) return null!;
             return usuarios.FirstOrDefault()!;
         }
         catch
@@ -78,39 +90,30 @@ public class AutenticacaoServico : IAutenticacaoRepositorio
         }
     }
 
-    public async Task<UsuarioDocumento> BuscarPeloCPF(string cpf)
+    /// <summary>
+    /// Método privado que busca um usuário pelo seu identificador único.
+    /// </summary>
+    /// <param name="identificador">Identificador único do usupario.</param>
+    /// <returns>UsuarioDocumento</returns>
+    /// <exception cref="Exception"></exception>
+    private async Task<UsuarioDocumento> BuscarPeloIdentificador(string identificador)
     {
         try
         {
             var consulta = _container.GetItemLinqQueryable<UsuarioDocumento>()
-                .Where(c => c.CPF.Equals(cpf)).ToFeedIterator();
+                .Where(c => c.Identificador.Equals(identificador)).ToFeedIterator();
             var usuarios = new List<UsuarioDocumento>();
             while (consulta.HasMoreResults)
             {
                 var response = await consulta.ReadNextAsync();
                 usuarios.AddRange(response);
             }
+            if (usuarios.Count <= 0) return null!;
             return usuarios.FirstOrDefault()!;
         }
         catch
         {
-            throw new Exception($"Erro ao buscar usuário, confira suas credenciais de acesso e tente novamente.");
+            throw new Exception("Erro ao buscar usuário, confira suas credenciais de acesso e tente novamente.");
         }
-    }
-
-    public string GerarNovoJwt(List<Claim> claims)
-    {
-        string secreta = _configuracao["Jwt:ChaveSecreta"]!;
-        byte[] chave = Encoding.UTF8.GetBytes(secreta);
-
-        var chaveSecreta = new SymmetricSecurityKey(chave);
-        var credenciais = new SigningCredentials(chaveSecreta, SecurityAlgorithms.HmacSha256);
-
-        var objetoDeToken = new JwtSecurityToken(
-            expires: DateTime.Now.AddHours(8),
-            claims: claims,
-            signingCredentials: credenciais);
-        string token = new JwtSecurityTokenHandler().WriteToken(objetoDeToken);
-        return token;
     }
 }
