@@ -20,7 +20,7 @@ public class ClienteDocumento
     public string CPF { get; set; } = string.Empty;
 
     [JsonProperty("endereco")]
-    public Endereco? Endereco { get; set; }
+    public string? Endereco { get; set; }
 
     [JsonProperty("profissao")]
     public string Profissao { get; set; } = string.Empty;
