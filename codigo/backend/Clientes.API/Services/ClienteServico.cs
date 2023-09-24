@@ -178,6 +178,7 @@ public class ClienteServico : IClienteRepositorio
             else
             {
                 var clienteEncontrado = await ObterPelasCredenciais(cpf);
+                if (clienteEncontrado == null) return null!;
                 cliente = new ClienteDocumento()
                 {
                     Id = clienteEncontrado.Id,
@@ -209,7 +210,7 @@ public class ClienteServico : IClienteRepositorio
             var resposta = await _containerCliente.DeleteItemAsync<ClienteDocumento>(id, new PartitionKey(id));
             return resposta.Resource;
         }
-        catch (Exception e)
+        catch
         {
             throw new Exception("Houve um erro ao apagar um cliente.");
         }
