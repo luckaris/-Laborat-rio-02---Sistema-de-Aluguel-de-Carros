@@ -9,20 +9,23 @@ export const SignUp = () => {
   const formik = useFormik({
     initialValues: {
       userName: "",
-      email: "",
+      identifier: "",
       password: "",
+      type: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Email invalido").required("Campo obrigatório"),
       password: Yup.string().required("Campo obrigatório"),
       userName: Yup.string().required("Campo obrigatório"),
+      type: Yup.string().required("Campo obrigatório"),
     }),
     onSubmit: async (values) => {
       try {
         await LoginService.signUp(
-          values.email,
+          values.userName,
+          values.identifier,
           values.password,
-          values.userName
+          values.type
         );
         navigate("/login");
       } catch (error) {
@@ -58,18 +61,18 @@ export const SignUp = () => {
             </label>
           )}
           <input
-            value={formik.values.email}
+            value={formik.values.identifier}
             onChange={formik.handleChange}
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
+            id="identifier"
+            name="identifier"
+            type="identifier"
+            placeholder="CPF"
             className="input w-full max-w-xs"
           />
-          {formik.errors.email && formik.touched.email && (
+          {formik.errors.identifier && formik.touched.identifier && (
             <label className="label">
               <span className="label-text-alt text-error">
-                {formik.errors.email}
+                {formik.errors.identifier}
               </span>
             </label>
           )}
@@ -86,6 +89,22 @@ export const SignUp = () => {
             <label className="label">
               <span className="label-text-alt text-error">
                 {formik.errors.password}
+              </span>
+            </label>
+          )}
+          <input
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            id="type"
+            name="type"
+            type="type"
+            placeholder="Tipo de usuario"
+            className="input w-full max-w-xs"
+          />
+          {formik.errors.password && formik.touched.type && (
+            <label className="label">
+              <span className="label-text-alt text-error">
+                {formik.errors.type}
               </span>
             </label>
           )}
