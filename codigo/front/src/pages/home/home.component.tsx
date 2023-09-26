@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ClientList } from "../../components";
+import { VehicleList } from "../../components/vehicleList";
 
 export const Home = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -68,11 +69,11 @@ export const Home = () => {
             }`}
             onClick={() => setCurrentTab(1)}
           >
-            Aluguel
+            Veículo
           </a>
         </div>
         {currentTab === 0 && <ClientList />}
-        {currentTab === 1 && <div />}
+        {currentTab === 1 && <VehicleList />}
       </div>
     </div>
   );

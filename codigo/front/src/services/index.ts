@@ -1,5 +1,14 @@
 import axios from "axios";
 
+const apiVehicle = axios.create({
+  baseURL: "https://localhost:7060/",
+  headers: {
+    Accept: "*/*",
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+});
+
 const apiClient = axios.create({
   baseURL: "https://localhost:7056",
   headers: {
@@ -26,5 +35,5 @@ apiAuth.interceptors.request.use(async (config) => {
   return config;
 });
 
-export { apiClient, apiAuth };
+export { apiClient, apiAuth, apiVehicle };
 export * from "./login";
