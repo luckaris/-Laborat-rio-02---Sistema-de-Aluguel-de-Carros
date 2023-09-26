@@ -14,7 +14,7 @@ export const SignUp = () => {
       type: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Email invalido").required("Campo obrigatório"),
+      identifier: Yup.string().required("Campo obrigatório"),
       password: Yup.string().required("Campo obrigatório"),
       userName: Yup.string().required("Campo obrigatório"),
       type: Yup.string().required("Campo obrigatório"),
