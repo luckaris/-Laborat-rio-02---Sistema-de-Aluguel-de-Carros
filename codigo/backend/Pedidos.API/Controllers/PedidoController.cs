@@ -79,7 +79,7 @@ namespace Pedidos.API.Controllers
                     message = "Pedido não foi encontrado."
                 });
             }
-            var cliente = await _pedidoRepositorio.Apagar(pedido.CpfCliente, pedido.PlacaAutomovel);
+            var cliente = await _pedidoRepositorio.Apagar(pedido.PlacaAutomovel);
             if (cliente != null)
             {
                 return BadRequest(new

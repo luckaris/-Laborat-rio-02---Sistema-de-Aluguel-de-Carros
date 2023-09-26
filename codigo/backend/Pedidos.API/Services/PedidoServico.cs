@@ -42,7 +42,7 @@ public class PedidoServico : IPedidoRepositorio
         }
     }
 
-    public async Task<MostrarPedidoDto> ObterPelaPlaca(string placa)
+    public async Task<PedidoDocumento> ObterPelaPlaca(string placa)
     {
         try
         {
@@ -55,12 +55,9 @@ public class PedidoServico : IPedidoRepositorio
                 var resposta = await consulta.ReadNextAsync();
                 pedidos.AddRange(resposta);
             }
-            return new MostrarPedidoDto()
-            {
-                CpfCliente = pedidos.FirstOrDefault()!.CpfCliente,
-                PlacaAutomovel = pedidos.FirstOrDefault()!.PlacaAutomovel,
-                Status = pedidos.FirstOrDefault()!.Status
-            };
+            var pedido = pedidos.FirstOrDefault()!;
+            if (pedido == null) return null!;
+            return pedido;
         }
         catch (Exception)
         {
@@ -121,26 +118,27 @@ public class PedidoServico : IPedidoRepositorio
         }
     }
 
-    public async Task<MostrarPedidoDto> Atualizar(string cpf, AtualizarPedidoDto dto)
+    public async Task<MostrarPedidoDto> Atualizar(string placa, AtualizarPedidoDto dto)
     {
         try
         {
-            var id = await ObterId(cpf, dto.PlacaAutomovel);
+            var id = await ObterId(placa);
+            var pedidoEncontrado = await ObterPelaPlaca(placa);
             if (string.IsNullOrEmpty(id)) return null!;
             var pedido = new PedidoDocumento()
             {
                 Id = id,
                 PedidoId = id,
-                CpfCliente = dto.CpfCliente,
-                PlacaAutomovel = dto.PlacaAutomovel,
+                CpfCliente = pedidoEncontrado.CpfCliente,
+                PlacaAutomovel = pedidoEncontrado.PlacaAutomovel,
                 Status = dto.Status
             };
 
             var resposta = await _containerPedido.ReplaceItemAsync(pedido, id);
             return new MostrarPedidoDto
             {
-                CpfCliente = dto.CpfCliente,
-                PlacaAutomovel = dto.PlacaAutomovel,
+                CpfCliente = pedido.CpfCliente,
+                PlacaAutomovel = pedido.PlacaAutomovel,
                 Status = dto.Status
             };
         }
@@ -150,11 +148,11 @@ public class PedidoServico : IPedidoRepositorio
         }
     }
 
-    public async Task<MostrarPedidoDto> Apagar(string cpf, string placa)
+    public async Task<MostrarPedidoDto> Apagar(string placa)
     {
         try
         {
-            var id = await ObterId(cpf, placa);
+            var id = await ObterId(placa);
             var resposta = await _containerPedido.DeleteItemAsync<PedidoDocumento>(id, new PartitionKey(id));
             if (resposta is null) return null!;
             return new MostrarPedidoDto
@@ -185,12 +183,12 @@ public class PedidoServico : IPedidoRepositorio
         return dtos;
     }
 
-    private async Task<string> ObterId(string cpf, string placa)
+    private async Task<string> ObterId(string placa)
     {
         try
         {
             var consulta = _containerPedido.GetItemLinqQueryable<PedidoDocumento>()
-            .Where(c => c.CpfCliente.Equals(cpf) && c.PlacaAutomovel.Equals(placa)).ToFeedIterator();
+            .Where(c => c.PlacaAutomovel.ToLower().Equals(placa.ToLower())).ToFeedIterator();
             var pedidos = new List<PedidoDocumento>();
 
             while (consulta.HasMoreResults)
@@ -198,7 +196,9 @@ public class PedidoServico : IPedidoRepositorio
                 var resposta = await consulta.ReadNextAsync();
                 pedidos.AddRange(resposta);
             }
-            return pedidos.FirstOrDefault()!.Id;
+            var pedido = pedidos.FirstOrDefault()!;
+            if (pedido is null) return null!;
+            return pedido.Id;
         }
         catch (Exception)
         {
